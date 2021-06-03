@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nonstop-server-deployment
+  labels:
+    app: nonstop-server-deployment
+  # annotations:
+    # kubernetes.io/change-cause: version 1.10.1
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: nonstop-server-deployment
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: nonstop-server-deployment
+    spec:
+      containers:
+      - name: nonstop-server-deployment
+        image: tndyd5390/nonstop-server:0.1
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+        livenessProbe:
+          httpGet:
+            path: /liveness
+            port: 8080
+        readinessProbe:
+          httpGet:
+            path: /readiness
+            port: 8080
+      terminationGracePeriodSeconds: 10
