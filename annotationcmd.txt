@@ -1,0 +1,1 @@
+kubectl patch deployment/nonstop-server-deployment -p "{\"metadata\":{\"annotations\":{\"kubernetes.io/change-cause\":\"version 0.1\"}}}"
