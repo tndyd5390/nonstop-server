@@ -4,15 +4,15 @@ metadata:
   name: nonstop-server-deployment
   labels:
     app: nonstop-server-deployment
+  annotations:
+    kubernetes.io/change-cause: version 1.10.1
 spec:
-  replicas: 3
+  replicas: 2
   selector:
     matchLabels:
       app: nonstop-server-deployment
   strategy:
     rollingUpdate:
-      maxSurge: 25%
-      maxUnavailable: 25%
     type: RollingUpdate
   template:
     metadata:
@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
       - name: nonstop-server-deployment
-        image: tndyd5390/nonstop-server:0.1
+        image: tndyd5390/nonstop-server:0.2
         imagePullPolicy: Always
         ports:
         - containerPort: 8080
