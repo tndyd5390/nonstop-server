@@ -5,9 +5,9 @@ metadata:
   labels:
     app: nonstop-server-deployment
   annotations:
-    kubernetes.io/change-cause: version 1.10.1
+    kubernetes.io/change-cause: version 0.1
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: nonstop-server-deployment
@@ -19,6 +19,12 @@ spec:
       labels:
         app: nonstop-server-deployment
     spec:
+      initContainers:
+      - name: check-pod
+        image: nicolaka/netshoot
+        command: 
+        - curl
+        - clusterip-service
       containers:
       - name: nonstop-server-deployment
         image: tndyd5390/nonstop-server:0.2
